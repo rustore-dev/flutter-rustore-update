@@ -1,0 +1,20 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  GREETING: Hello, World!
+
+tasks:
+  default:
+    cmds:
+      - echo "{{.GREETING}}"
+    silent: true
+
+  client:
+    cmds:
+      - flutter pub run pigeon
+        --input pigeons/rustore.dart
+        --dart_out lib/pigeons/rustore.dart
+        --java_out ./android/src/main/kotlin/ru/rustore/flutter_rustore_update/pigeons/Rustore.java
+        --java_package "ru.rustore.flutter_rustore_update.pigeons"

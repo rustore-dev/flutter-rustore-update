@@ -46,21 +46,41 @@ class UpdateInfo {
 
 class RequestResponse {
   RequestResponse({
-    required this.status,
+    required this.bytesDownloaded,
+    required this.installErrorCode,
+    required this.installStatus,
+    required this.packageName,
+    required this.totalBytesToDownload,
   });
 
-  String status;
+  int bytesDownloaded;
+
+  int installErrorCode;
+
+  int installStatus;
+
+  String packageName;
+
+  int totalBytesToDownload;
 
   Object encode() {
     return <Object?>[
-      status,
+      bytesDownloaded,
+      installErrorCode,
+      installStatus,
+      packageName,
+      totalBytesToDownload,
     ];
   }
 
   static RequestResponse decode(Object result) {
     result as List<Object?>;
     return RequestResponse(
-      status: result[0]! as String,
+      bytesDownloaded: result[0]! as int,
+      installErrorCode: result[1]! as int,
+      installStatus: result[2]! as int,
+      packageName: result[3]! as String,
+      totalBytesToDownload: result[4]! as int,
     );
   }
 }

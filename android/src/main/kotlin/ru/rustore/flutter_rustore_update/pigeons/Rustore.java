@@ -180,17 +180,69 @@ public class Rustore {
 
   /** Generated class from Pigeon that represents data sent in messages. */
   public static final class RequestResponse {
-    private @NonNull String status;
+    private @NonNull Long bytesDownloaded;
 
-    public @NonNull String getStatus() {
-      return status;
+    public @NonNull Long getBytesDownloaded() {
+      return bytesDownloaded;
     }
 
-    public void setStatus(@NonNull String setterArg) {
+    public void setBytesDownloaded(@NonNull Long setterArg) {
       if (setterArg == null) {
-        throw new IllegalStateException("Nonnull field \"status\" is null.");
+        throw new IllegalStateException("Nonnull field \"bytesDownloaded\" is null.");
       }
-      this.status = setterArg;
+      this.bytesDownloaded = setterArg;
+    }
+
+    private @NonNull Long installErrorCode;
+
+    public @NonNull Long getInstallErrorCode() {
+      return installErrorCode;
+    }
+
+    public void setInstallErrorCode(@NonNull Long setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"installErrorCode\" is null.");
+      }
+      this.installErrorCode = setterArg;
+    }
+
+    private @NonNull Long installStatus;
+
+    public @NonNull Long getInstallStatus() {
+      return installStatus;
+    }
+
+    public void setInstallStatus(@NonNull Long setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"installStatus\" is null.");
+      }
+      this.installStatus = setterArg;
+    }
+
+    private @NonNull String packageName;
+
+    public @NonNull String getPackageName() {
+      return packageName;
+    }
+
+    public void setPackageName(@NonNull String setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"packageName\" is null.");
+      }
+      this.packageName = setterArg;
+    }
+
+    private @NonNull Long totalBytesToDownload;
+
+    public @NonNull Long getTotalBytesToDownload() {
+      return totalBytesToDownload;
+    }
+
+    public void setTotalBytesToDownload(@NonNull Long setterArg) {
+      if (setterArg == null) {
+        throw new IllegalStateException("Nonnull field \"totalBytesToDownload\" is null.");
+      }
+      this.totalBytesToDownload = setterArg;
     }
 
     /** Constructor is non-public to enforce null safety; use Builder. */
@@ -198,31 +250,75 @@ public class Rustore {
 
     public static final class Builder {
 
-      private @Nullable String status;
+      private @Nullable Long bytesDownloaded;
 
-      public @NonNull Builder setStatus(@NonNull String setterArg) {
-        this.status = setterArg;
+      public @NonNull Builder setBytesDownloaded(@NonNull Long setterArg) {
+        this.bytesDownloaded = setterArg;
+        return this;
+      }
+
+      private @Nullable Long installErrorCode;
+
+      public @NonNull Builder setInstallErrorCode(@NonNull Long setterArg) {
+        this.installErrorCode = setterArg;
+        return this;
+      }
+
+      private @Nullable Long installStatus;
+
+      public @NonNull Builder setInstallStatus(@NonNull Long setterArg) {
+        this.installStatus = setterArg;
+        return this;
+      }
+
+      private @Nullable String packageName;
+
+      public @NonNull Builder setPackageName(@NonNull String setterArg) {
+        this.packageName = setterArg;
+        return this;
+      }
+
+      private @Nullable Long totalBytesToDownload;
+
+      public @NonNull Builder setTotalBytesToDownload(@NonNull Long setterArg) {
+        this.totalBytesToDownload = setterArg;
         return this;
       }
 
       public @NonNull RequestResponse build() {
         RequestResponse pigeonReturn = new RequestResponse();
-        pigeonReturn.setStatus(status);
+        pigeonReturn.setBytesDownloaded(bytesDownloaded);
+        pigeonReturn.setInstallErrorCode(installErrorCode);
+        pigeonReturn.setInstallStatus(installStatus);
+        pigeonReturn.setPackageName(packageName);
+        pigeonReturn.setTotalBytesToDownload(totalBytesToDownload);
         return pigeonReturn;
       }
     }
 
     @NonNull
     ArrayList<Object> toList() {
-      ArrayList<Object> toListResult = new ArrayList<Object>(1);
-      toListResult.add(status);
+      ArrayList<Object> toListResult = new ArrayList<Object>(5);
+      toListResult.add(bytesDownloaded);
+      toListResult.add(installErrorCode);
+      toListResult.add(installStatus);
+      toListResult.add(packageName);
+      toListResult.add(totalBytesToDownload);
       return toListResult;
     }
 
     static @NonNull RequestResponse fromList(@NonNull ArrayList<Object> list) {
       RequestResponse pigeonResult = new RequestResponse();
-      Object status = list.get(0);
-      pigeonResult.setStatus((String) status);
+      Object bytesDownloaded = list.get(0);
+      pigeonResult.setBytesDownloaded((bytesDownloaded == null) ? null : ((bytesDownloaded instanceof Integer) ? (Integer) bytesDownloaded : (Long) bytesDownloaded));
+      Object installErrorCode = list.get(1);
+      pigeonResult.setInstallErrorCode((installErrorCode == null) ? null : ((installErrorCode instanceof Integer) ? (Integer) installErrorCode : (Long) installErrorCode));
+      Object installStatus = list.get(2);
+      pigeonResult.setInstallStatus((installStatus == null) ? null : ((installStatus instanceof Integer) ? (Integer) installStatus : (Long) installStatus));
+      Object packageName = list.get(3);
+      pigeonResult.setPackageName((String) packageName);
+      Object totalBytesToDownload = list.get(4);
+      pigeonResult.setTotalBytesToDownload((totalBytesToDownload == null) ? null : ((totalBytesToDownload instanceof Integer) ? (Integer) totalBytesToDownload : (Long) totalBytesToDownload));
       return pigeonResult;
     }
   }

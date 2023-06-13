@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rustore_update/const.dart';
 import 'package:flutter_rustore_update/flutter_rustore_update.dart';
 
 void main() {
@@ -37,6 +38,42 @@ class _AppState extends State<App> {
     });
   }
 
+  void update() {
+    RustoreUpdateClient.info().then((info) {
+      setState(() {
+        availableVersionCode = info.availableVersionCode;
+        installStatus = info.installStatus;
+        packageName = info.packageName;
+        updateAvailability = info.updateAvailability;
+      });
+
+      if (info.updateAvailability == UPDATE_AILABILITY_AVAILABLE) {
+        RustoreUpdateClient.listener((value) {
+          print("listener installStatus ${value.installStatus}");
+          print("listener bytesDownloaded ${value.bytesDownloaded}");
+          print("listener totalBytesToDownload ${value.totalBytesToDownload}");
+          print("listener installErrorCode ${value.installErrorCode}");
+
+          if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
+            RustoreUpdateClient.complete().catchError((err) {
+              print("complete err ${err}");
+            });
+          }
+        });
+
+        RustoreUpdateClient.download().then((value) {
+          print("download code ${value.code}");
+        }).catchError((err) {
+          print("download err ${err}");
+        });
+      }
+    }).catchError((err) {
+      setState(() {
+        print(err.toString());
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -47,6 +84,7 @@ class _AppState extends State<App> {
         body: SingleChildScrollView(
           child: Column(
             children: [
+              OutlinedButton(onPressed: update, child: Text("Check update")),
               Text('availableVersionCode: $availableVersionCode'),
               Text('installStatus: $installStatus'),
               Text('packageName: $packageName'),

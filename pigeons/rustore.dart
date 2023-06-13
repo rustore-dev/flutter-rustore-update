@@ -8,7 +8,11 @@ class UpdateInfo {
 }
 
 class RequestResponse {
-  late String status;
+  late int bytesDownloaded;
+  late int installErrorCode;
+  late int installStatus;
+  late String packageName;
+  late int totalBytesToDownload;
 }
 
 class DownloadResponse {

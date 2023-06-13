@@ -39,7 +39,11 @@ class FlutterRustoreUpdateClient(private val context: Context) : Rustore.Rustore
             manager.registerListener { state ->
                 progress?.success(
                     Rustore.RequestResponse.Builder()
-                        .setStatus(state.toString())
+                        .setBytesDownloaded(state.bytesDownloaded)
+                        .setInstallErrorCode(state.installErrorCode.toLong())
+                        .setInstallStatus(state.installStatus.toLong())
+                        .setPackageName(state.packageName)
+                        .setTotalBytesToDownload(state.totalBytesToDownload)
                         .build()
                 )
             }

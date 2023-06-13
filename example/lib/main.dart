@@ -63,6 +63,9 @@ class _AppState extends State<App> {
 
         RustoreUpdateClient.download().then((value) {
           print("download code ${value.code}");
+          if (value.code == ACTIVITY_RESULT_CANCELED) {
+            print("user cancel update");
+          }
         }).catchError((err) {
           print("download err ${err}");
         });

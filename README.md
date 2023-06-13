@@ -10,7 +10,7 @@ RuStore In-app updates SDK помогает поддерживать актуа�
 
 ### Пример пользовательского сценария
 
-<img src="https://help.rustore.ru/pic/4/4/44bf9ba30ffd3a1e4f820aeac364e0ef.png" alt="Update flow" height="400px">
+<img src="https://gitflic.ru/project/rustore/flutter-rustore-update/blob/raw?file=flow.png" alt="Update flow" height="400px">
 
 ### Условия корректной работы SDK
 

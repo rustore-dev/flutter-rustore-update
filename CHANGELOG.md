@@ -1,3 +1,7 @@
+## 0.0.3
+
+* Update RuStore Update SDK 0.2.0
+
 ## 0.0.2
 
 * Updated readme and docs

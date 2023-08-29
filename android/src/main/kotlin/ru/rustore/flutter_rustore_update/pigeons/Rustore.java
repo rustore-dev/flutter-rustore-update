@@ -420,7 +420,11 @@ public class Rustore {
 
     void info(@NonNull Result<UpdateInfo> result);
 
-    void request(@NonNull Result<RequestResponse> result);
+    void listener(@NonNull Result<RequestResponse> result);
+
+    void immediate(@NonNull Result<DownloadResponse> result);
+
+    void silent(@NonNull Result<DownloadResponse> result);
 
     void download(@NonNull Result<DownloadResponse> result);
 
@@ -462,7 +466,7 @@ public class Rustore {
       {
         BasicMessageChannel<Object> channel =
             new BasicMessageChannel<>(
-                binaryMessenger, "dev.flutter.pigeon.RustoreUpdate.request", getCodec());
+                binaryMessenger, "dev.flutter.pigeon.RustoreUpdate.listener", getCodec());
         if (api != null) {
           channel.setMessageHandler(
               (message, reply) -> {
@@ -480,7 +484,61 @@ public class Rustore {
                       }
                     };
 
-                api.request(resultCallback);
+                api.listener(resultCallback);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.RustoreUpdate.immediate", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                Result<DownloadResponse> resultCallback =
+                    new Result<DownloadResponse>() {
+                      public void success(DownloadResponse result) {
+                        wrapped.add(0, result);
+                        reply.reply(wrapped);
+                      }
+
+                      public void error(Throwable error) {
+                        ArrayList<Object> wrappedError = wrapError(error);
+                        reply.reply(wrappedError);
+                      }
+                    };
+
+                api.immediate(resultCallback);
+              });
+        } else {
+          channel.setMessageHandler(null);
+        }
+      }
+      {
+        BasicMessageChannel<Object> channel =
+            new BasicMessageChannel<>(
+                binaryMessenger, "dev.flutter.pigeon.RustoreUpdate.silent", getCodec());
+        if (api != null) {
+          channel.setMessageHandler(
+              (message, reply) -> {
+                ArrayList<Object> wrapped = new ArrayList<Object>();
+                Result<DownloadResponse> resultCallback =
+                    new Result<DownloadResponse>() {
+                      public void success(DownloadResponse result) {
+                        wrapped.add(0, result);
+                        reply.reply(wrapped);
+                      }
+
+                      public void error(Throwable error) {
+                        ArrayList<Object> wrappedError = wrapError(error);
+                        reply.reply(wrappedError);
+                      }
+                    };
+
+                api.silent(resultCallback);
               });
         } else {
           channel.setMessageHandler(null);

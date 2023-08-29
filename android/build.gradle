@@ -21,6 +21,7 @@ rootProject.allprojects {
         }
         google()
         mavenCentral()
+        mavenLocal()
     }
 }
 
@@ -67,5 +68,6 @@ android {
 }
 
 dependencies {
-    implementation 'ru.rustore.sdk:appupdate:0.1.2'
+    implementation 'ru.rustore.sdk:appupdate:0.2.0'
+//    implementation 'ru.rustore.sdk:appupdate:0.2.0-QA'
 }

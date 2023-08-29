@@ -25,7 +25,13 @@ abstract class RustoreUpdate {
   UpdateInfo info();
 
   @async
-  RequestResponse request();
+  RequestResponse listener();
+
+  @async
+  DownloadResponse immediate();
+
+  @async
+  DownloadResponse silent();
 
   @async
   DownloadResponse download();

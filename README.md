@@ -39,7 +39,7 @@ flutter pub add flutter_rustore_update
 
 ```yml
 dependencies:
-    flutter_rustore_update: ^0.0.3
+    flutter_rustore_update: ^1.0.0
 ```
 
 ## Проверка наличия обновлений

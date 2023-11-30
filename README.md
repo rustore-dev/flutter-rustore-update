@@ -27,7 +27,7 @@ RuStore In-app updates SDK помогает поддерживать актуа�
 
 Для того, чтобы узнать как правильно интегрировать пакет для работы с push-уведомлениями, рекомендуется ознакомиться с приложением-примером
 
-[https://gitflic.ru/project/rustore/flutter-rustore-update/file?file=example](https://gitflic.ru/project/rustore/flutter-rustore-update/file?file=example)
+[https://gitflic.ru/project/rustore/flutter-rustore-update](https://gitflic.ru/project/rustore/flutter-rustore-update)
 
 ## Подключение в проект
 

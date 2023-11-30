@@ -1,5 +1,7 @@
 # flutter_rustore_update
 
+## [Документация RuStore](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_updates/flutter)
+
 ## Общее
 
 RuStore In-app updates SDK помогает поддерживать актуальную версию вашего приложения на устройстве пользователя.

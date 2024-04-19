@@ -76,8 +76,8 @@ class _AppState extends State<App> {
           });
 
           if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.complete().catchError((err) {
-              print("complete err ${err}");
+            RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
+              print("completeUpdateFlexible err ${err}");
               setState(() {
                 completeErr = err.message;
               });
@@ -130,15 +130,6 @@ class _AppState extends State<App> {
             totalBytesToDownload = value.totalBytesToDownload;
             installErrorCode = value.installErrorCode;
           });
-
-          if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.complete().catchError((err) {
-              print("complete err ${err}");
-              setState(() {
-                completeErr = err.message;
-              });
-            });
-          }
         });
 
         RustoreUpdateClient.immediate().then((value) {
@@ -185,8 +176,8 @@ class _AppState extends State<App> {
           });
 
           if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.complete().catchError((err) {
-              print("complete err ${err}");
+            RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
+              print("completeUpdateFlexible err ${err}");
 
               setState(() {
                 completeErr = err.message;
@@ -245,9 +236,9 @@ class _AppState extends State<App> {
                 Row(
                   children: [
                     OutlinedButton(onPressed: update, child: Text("Update")),
-                    SizedBox(width: 24),
+                    SizedBox(width: 12),
                     OutlinedButton(onPressed: immediate, child: Text("Hard update")),
-                    SizedBox(width: 24),
+                    SizedBox(width: 12),
                     OutlinedButton(onPressed: silent, child: Text("Silent update")),
                   ],
                 ),

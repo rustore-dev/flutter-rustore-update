@@ -30,7 +30,11 @@ class RustoreUpdateClient {
     return _api.silent();
   }
 
-  static Future<void> complete() async {
-    return _api.complete();
+  static Future<void> completeUpdateSilent() async {
+    return _api.completeUpdateSilent();
+  }
+
+  static Future<void> completeUpdateFlexible() async {
+    return _api.completeUpdateFlexible();
   }
 }

@@ -37,5 +37,8 @@ abstract class RustoreUpdate {
   DownloadResponse download();
 
   @async
-  void complete();
+  void completeUpdateSilent();
+
+  @async
+  void completeUpdateFlexible();
 }

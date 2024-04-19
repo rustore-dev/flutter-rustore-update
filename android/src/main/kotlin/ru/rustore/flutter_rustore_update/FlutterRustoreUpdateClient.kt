@@ -6,6 +6,7 @@ import ru.rustore.flutter_rustore_update.pigeons.Rustore
 import ru.rustore.sdk.appupdate.manager.factory.RuStoreAppUpdateManagerFactory
 import ru.rustore.sdk.appupdate.model.AppUpdateInfo
 import ru.rustore.sdk.appupdate.model.AppUpdateOptions
+import ru.rustore.sdk.appupdate.model.AppUpdateType.Companion.FLEXIBLE
 import ru.rustore.sdk.appupdate.model.AppUpdateType.Companion.IMMEDIATE
 import ru.rustore.sdk.appupdate.model.AppUpdateType.Companion.SILENT
 import java.lang.Exception
@@ -112,8 +113,18 @@ class FlutterRustoreUpdateClient(private val context: Context) : Rustore.Rustore
             }
     }
 
-    override fun complete(result: Rustore.Result<Void>) {
-        manager.completeUpdate()
+    override fun completeUpdateSilent(result: Rustore.Result<Void>) {
+        manager.completeUpdate(AppUpdateOptions.Builder().appUpdateType(SILENT).build())
+            .addOnSuccessListener {
+                result.success(null)
+            }
+            .addOnFailureListener { throwable ->
+                result.error(throwable)
+            }
+    }
+
+    override fun completeUpdateFlexible(result: Rustore.Result<Void>) {
+        manager.completeUpdate(AppUpdateOptions.Builder().appUpdateType(FLEXIBLE).build())
             .addOnSuccessListener {
                 result.success(null)
             }

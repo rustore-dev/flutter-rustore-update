@@ -176,8 +176,8 @@ class _AppState extends State<App> {
           });
 
           if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
-              print("completeUpdateFlexible err ${err}");
+            RustoreUpdateClient.completeUpdateSilent().catchError((err) {
+              print("completeUpdateSilent err ${err}");
 
               setState(() {
                 completeErr = err.message;

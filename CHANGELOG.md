@@ -1,3 +1,7 @@
+## 6.1.0
+
+* Update RuStore Update SDK 6.1.0
+
 ## 6.0.0
 
 * Update RuStore Update SDK 6.0.0

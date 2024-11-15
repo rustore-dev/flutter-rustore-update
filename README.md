@@ -45,7 +45,7 @@ RuStore In-app updates SDK помогает поддерживать актуа�
   ```
     android {
        defaultConfig {
-       applicationId = "ru.rustore.sdk.billingexample"
+       applicationId = "ru.rustore.sdk.updateexample"
        }
     }
    ```
@@ -114,7 +114,7 @@ flutter pub add flutter_rustore_update
 
 ```yml
 dependencies:
-    flutter_rustore_update: ^6.1.0
+    flutter_rustore_update: ^7.0.0
 ```
 
 ## Проверка наличия обновлений

@@ -1,3 +1,7 @@
+## 8.0.0
+
+* Update RuStore Update SDK 8.0.0
+
 ## 7.0.1
 
 * Add support gradle 8

@@ -69,5 +69,5 @@ android {
 }
 
 dependencies {
-    implementation 'ru.rustore.sdk:appupdate:9.0.2'
+    implementation 'ru.rustore.sdk:appupdate:9.1.0'
 }

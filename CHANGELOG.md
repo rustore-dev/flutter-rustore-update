@@ -1,3 +1,7 @@
+## 10.0.0
+
+* Update RuStore Update SDK 10.0.0
+
 ## 9.1.0
 
 * Update RuStore Update SDK 9.1.0

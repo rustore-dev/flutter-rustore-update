@@ -111,7 +111,7 @@ flutter pub add flutter_rustore_update
 
 ```yml
 dependencies:
-    flutter_rustore_update: ^9.1.0
+    flutter_rustore_update: ^10.0.0
 ```
 
 ## Проверка наличия обновлений
@@ -135,10 +135,10 @@ RustoreUpdateClient.info().then((info) {
 Объект info содержит набор параметров, необходимых для определения доступности обновления:
 
 - updateAvailability - доступность обновления:
-- UPDATE_AILABILITY_NOT_AVAILABLE - обновление не нужно.
-- UPDATE_AILABILITY_AVAILABLE - обновление требуется загрузить или обновление уже загружено на устройство пользователя.
-- UPDATE_AILABILITY_IN_PROGRESS - обновление уже скачивается или установка уже запущена.
-- UPDATE_AILABILITY_UNKNOWN - статус по умолчанию.
+- UPDATE_AVAILABILITY_NOT_AVAILABLE - обновление не нужно.
+- UPDATE_AVAILABILITY_AVAILABLE - обновление требуется загрузить или обновление уже загружено на устройство пользователя.
+- UPDATE_AVAILABILITY_IN_PROGRESS - обновление уже скачивается или установка уже запущена.
+- UPDATE_AVAILABILITY_UNKNOWN - статус по умолчанию.
 - installStatus - статус установки обновления, если пользователь уже устанавливает обновление в текущий момент времени:
 - INSTALL_STATUS_DOWNLOADED - скачано.
 - INSTALL_STATUS_DOWNLOADING - скачивается.

@@ -1,21 +1,47 @@
+import 'dart:async';
+
+import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rustore_update/pigeons/rustore.dart';
+
+export 'package:flutter_rustore_update/const.dart';
+export 'package:flutter_rustore_update/pigeons/rustore.dart'
+    show DownloadResponse, RequestResponse, UpdateInfo;
+export 'package:flutter_rustore_update/src/rustore_update_types.dart';
 
 typedef void Listener(RequestResponse value);
 
 class RustoreUpdateClient {
   static final _api = RustoreUpdate();
+  static const EventChannel _stateEventChannel = EventChannel(
+    'ru.rustore.flutter_rustore_update/state',
+  );
+  static Stream<RequestResponse>? _stateStream;
+
+  @visibleForTesting
+  static Stream<RequestResponse>? debugStateStreamOverride;
 
   static Future<UpdateInfo> info() async {
     return _api.info();
   }
 
-  static listener(Listener callback) async {
-    _api.listener().then((value) {
-      // reset callback
-      listener(callback);
+  static Stream<RequestResponse> get stateStream {
+    final debugStream = debugStateStreamOverride;
+    if (debugStream != null) {
+      return debugStream;
+    }
 
-      callback(value);
-    });
+    return _stateStream ??= _stateEventChannel
+        .receiveBroadcastStream()
+        .map((event) => RequestResponse.decode(event!))
+        .asBroadcastStream();
+  }
+
+  @Deprecated('Use RustoreUpdateClient.stateStream.listen(callback) instead.')
+  static Future<StreamSubscription<RequestResponse>> listener(
+    Listener callback,
+  ) async {
+    return stateStream.listen(callback);
   }
 
   static Future<DownloadResponse> download() async {

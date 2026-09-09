@@ -1,5 +1,13 @@
 import 'package:pigeon/pigeon.dart';
 
+@ConfigurePigeon(PigeonOptions(
+    dartOut: 'lib/pigeons/rustore.dart',
+    dartOptions: DartOptions(),
+    javaOut:
+        'android/src/main/kotlin/ru/rustore/flutter_rustore_update/pigeons/Rustore.java',
+    javaOptions: JavaOptions(
+        package: 'ru.rustore.flutter_rustore_update.pigeons')))
+
 class UpdateInfo {
   late int availableVersionCode;
   late int installStatus;

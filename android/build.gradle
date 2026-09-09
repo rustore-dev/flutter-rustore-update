@@ -17,7 +17,7 @@ buildscript {
 rootProject.allprojects {
     repositories {
         maven {
-            url = uri("https://artifactory-external.vkpartner.ru/artifactory/maven")
+            url = uri("https://nexus-external.rustore.ru/repository/maven-rustore-exposed")
         }
         google()
         mavenCentral()
@@ -29,7 +29,9 @@ apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
-    namespace 'ru.rustore.flutter_rustore_update'
+    if (project.android.hasProperty("namespace")) {
+        namespace 'ru.rustore.flutter_rustore_update'
+    }
     compileSdk 34
 
     compileOptions {
@@ -47,7 +49,7 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 23
+        minSdkVersion 24
     }
 
     dependencies {
@@ -69,5 +71,5 @@ android {
 }
 
 dependencies {
-    implementation 'ru.rustore.sdk:appupdate:10.0.0'
+    implementation 'ru.rustore.sdk:appupdate:10.5.1'
 }

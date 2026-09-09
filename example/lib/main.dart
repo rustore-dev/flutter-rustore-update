@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rustore_update/const.dart';
 import 'package:flutter_rustore_update/flutter_rustore_update.dart';
@@ -14,6 +16,8 @@ class App extends StatefulWidget {
 }
 
 class _AppState extends State<App> {
+  StreamSubscription<RequestResponse>? _updateSubscription;
+  Future<void> Function()? _completeUpdate;
   int availableVersionCode = 0;
   int installStatus = 0;
   String packageName = "";
@@ -31,9 +35,81 @@ class _AppState extends State<App> {
   String silentError = "";
   String immediateError = "";
 
+  String get _installStatusLabel {
+    switch (InstallStatus.fromValue(installStatus)) {
+      case InstallStatus.downloaded:
+        return 'INSTALL DOWNLOADED';
+      case InstallStatus.downloading:
+        return 'INSTALL DOWNLOADING';
+      case InstallStatus.failed:
+        return 'INSTALL FAILED';
+      case InstallStatus.installing:
+        return 'INSTALL INSTALLING';
+      case InstallStatus.pending:
+        return 'INSTALL PENDING';
+      case InstallStatus.unknown:
+        return 'INSTALL UNKNOWN';
+    }
+  }
+
+  String get _updateAvailabilityLabel {
+    switch (UpdateAvailability.fromValue(updateAvailability)) {
+      case UpdateAvailability.available:
+        return 'UPDATE AVAILABLE';
+      case UpdateAvailability.inProgress:
+        return 'UPDATE IN PROGRESS';
+      case UpdateAvailability.notAvailable:
+        return 'UPDATE NOT AVAILABLE';
+      case UpdateAvailability.unknown:
+        return 'UPDATE UNKNOWN';
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    _updateSubscription = RustoreUpdateClient.stateStream.listen((value) {
+      print("listener installStatus ${value.installStatus}");
+      print("listener bytesDownloaded ${value.bytesDownloaded}");
+      print("listener totalBytesToDownload ${value.totalBytesToDownload}");
+      print("listener installErrorCode ${value.installErrorCode}");
+
+      if (!mounted) {
+        return;
+      }
+
+      setState(() {
+        installStatus = value.installStatus;
+        bytesDownloaded = value.bytesDownloaded;
+        totalBytesToDownload = value.totalBytesToDownload;
+        installErrorCode = value.installErrorCode;
+      });
+
+      if (value.installStatusValue == InstallStatus.downloaded) {
+        final completeUpdate = _completeUpdate;
+        _completeUpdate = null;
+        if (completeUpdate == null) {
+          return;
+        }
+
+        completeUpdate().catchError((err) {
+          print("completeUpdateFlexible err ${err}");
+          if (!mounted) {
+            return;
+          }
+
+          setState(() {
+            completeErr = err.message;
+          });
+        });
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _updateSubscription?.cancel();
+    super.dispose();
   }
 
   void info() {
@@ -61,30 +137,8 @@ class _AppState extends State<App> {
         updateAvailability = info.updateAvailability;
       });
 
-      if (info.updateAvailability == UPDATE_AILABILITY_AVAILABLE) {
-        RustoreUpdateClient.listener((value) {
-          print("listener installStatus ${value.installStatus}");
-          print("listener bytesDownloaded ${value.bytesDownloaded}");
-          print("listener totalBytesToDownload ${value.totalBytesToDownload}");
-          print("listener installErrorCode ${value.installErrorCode}");
-
-          setState(() {
-            installStatus = value.installStatus;
-            bytesDownloaded = value.bytesDownloaded;
-            totalBytesToDownload = value.totalBytesToDownload;
-            installErrorCode = value.installErrorCode;
-          });
-
-          if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
-              print("completeUpdateFlexible err ${err}");
-              setState(() {
-                completeErr = err.message;
-              });
-            });
-          }
-        });
-
+      if (info.updateAvailabilityValue == UpdateAvailability.available) {
+        _completeUpdate = RustoreUpdateClient.completeUpdateFlexible;
         RustoreUpdateClient.download().then((value) {
           print("download code ${value.code}");
           setState(() {
@@ -117,21 +171,8 @@ class _AppState extends State<App> {
         updateAvailability = info.updateAvailability;
       });
 
-      if (info.updateAvailability == UPDATE_AILABILITY_AVAILABLE) {
-        RustoreUpdateClient.listener((value) {
-          print("listener installStatus ${value.installStatus}");
-          print("listener bytesDownloaded ${value.bytesDownloaded}");
-          print("listener totalBytesToDownload ${value.totalBytesToDownload}");
-          print("listener installErrorCode ${value.installErrorCode}");
-
-          setState(() {
-            installStatus = value.installStatus;
-            bytesDownloaded = value.bytesDownloaded;
-            totalBytesToDownload = value.totalBytesToDownload;
-            installErrorCode = value.installErrorCode;
-          });
-        });
-
+      if (info.updateAvailabilityValue == UpdateAvailability.available) {
+        _completeUpdate = null;
         RustoreUpdateClient.immediate().then((value) {
           print("immediate code ${value.code}");
           setState(() {
@@ -161,31 +202,8 @@ class _AppState extends State<App> {
         updateAvailability = info.updateAvailability;
       });
 
-      if (info.updateAvailability == UPDATE_AILABILITY_AVAILABLE) {
-        RustoreUpdateClient.listener((value) {
-          print("listener installStatus ${value.installStatus}");
-          print("listener bytesDownloaded ${value.bytesDownloaded}");
-          print("listener totalBytesToDownload ${value.totalBytesToDownload}");
-          print("listener installErrorCode ${value.installErrorCode}");
-
-          setState(() {
-            installStatus = value.installStatus;
-            bytesDownloaded = value.bytesDownloaded;
-            totalBytesToDownload = value.totalBytesToDownload;
-            installErrorCode = value.installErrorCode;
-          });
-
-          if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-            RustoreUpdateClient.completeUpdateSilent().catchError((err) {
-              print("completeUpdateSilent err ${err}");
-
-              setState(() {
-                completeErr = err.message;
-              });
-            });
-          }
-        });
-
+      if (info.updateAvailabilityValue == UpdateAvailability.available) {
+        _completeUpdate = RustoreUpdateClient.completeUpdateSilent;
         RustoreUpdateClient.silent().then((value) {
           print("silent code ${value.code}");
           setState(() {
@@ -226,9 +244,10 @@ class _AppState extends State<App> {
                   children: [
                     Text('Info:'),
                     Text('availableVersionCode: $availableVersionCode'),
-                    Text('installStatus: $installStatus'),
+                    Text('installStatus: $installStatus ($_installStatusLabel)'),
                     Text('packageName: $packageName'),
-                    Text('updateAvailability: $updateAvailability'),
+                    Text(
+                        'updateAvailability: $updateAvailability ($_updateAvailabilityLabel)'),
                     Text('error: $infoErr'),
                   ],
                 ),
@@ -237,9 +256,11 @@ class _AppState extends State<App> {
                   children: [
                     OutlinedButton(onPressed: update, child: Text("Update")),
                     SizedBox(width: 12),
-                    OutlinedButton(onPressed: immediate, child: Text("Hard update")),
+                    OutlinedButton(
+                        onPressed: immediate, child: Text("Hard update")),
                     SizedBox(width: 12),
-                    OutlinedButton(onPressed: silent, child: Text("Silent update")),
+                    OutlinedButton(
+                        onPressed: silent, child: Text("Silent update")),
                   ],
                 ),
                 SizedBox(height: 48),

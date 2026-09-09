@@ -1,43 +1,75 @@
+<!-- ── Language switch (EN active) ──────────────────────────────────── -->
+
+<div align="left" style="margin:0 0 14px 0;">
+
+<span style="display:inline-block;
+padding:.28rem .6rem;
+border:1px solid rgba(0,0,0,.18);
+border-radius:10px 0 0 10px;
+font-weight:400;
+font-size:12px;
+letter-spacing:.06em;
+color:#111827;
+background:linear-gradient(180deg,#ffffff,#e9edf2);
+box-shadow:0 1px 0 rgba(0,0,0,.06);">
+[RU]
+</span><span style="display:inline-block;
+margin-left:-1px;
+padding:.28rem .6rem;
+border:1px solid rgba(0,0,0,.14);
+border-radius:0 10px 10px 0;
+font-weight:400;
+font-size:12px;
+letter-spacing:.06em;
+background:linear-gradient(180deg,#f3f4f6,#ffffff);
+box-shadow:inset 0 2px 6px rgba(0,0,0,.10);">
+EN
+</span>
+
+</div>
+<!-- ────────────────────────────────────────────────────────────────── -->
+
+
 # flutter_rustore_update
 
-## [Документация RuStore](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_updates/flutter)
+## [Documentation RuStore](https://help.rustore.ru/rustore/for_developers/developer-documentation/sdk_updates/flutter)
 
 - [flutter\_rustore\_update](#flutter_rustore_update)
-  - [Документация RuStore](#документация-rustore)
-    - [Общее](#общее)
-    - [Пример пользовательского сценария](#пример-пользовательского-сценария)
-    - [Подготовка требуемых параметров](#подготовка-требуемых-параметров)
-    - [Настройка примера приложения](#настройка-примера-приложения)
-    - [Условия корректной работы SDK](#условия-корректной-работы-sdk)
-    - [Пример реализации](#пример-реализации)
-  - [Подключение в проект](#подключение-в-проект)
-  - [Проверка наличия обновлений](#проверка-наличия-обновлений)
-  - [Скачивание обновления](#скачивание-обновления)
-    - [Отложенное обновление](#отложенное-обновление)
-    - [Принудительное обновление](#принудительное-обновление)
-    - [Тихое обновление](#тихое-обновление)
-  - [Установка обновления](#установка-обновления)
-    - [Гибкое завершение обновления](#гибкое-завершение-обновления)
-    - [Тихое завершение обновления](#тихое-завершение-обновления)
-  - [Возможные ошибки](#возможные-ошибки)
+  - [Documentation RuStore](#documentation-rustore)
+    - [General](#general)
+    - [Example user scenario](#example-user-scenario)
+    - [Preparing required parameters](#preparing-required-parameters)
+    - [Setting up the sample app](#setting-up-the-sample-app)
+    - [Conditions for correct SDK operation](#conditions-for-correct-sdk-operation)
+    - [Example implementation](#example-implementation)
+  - [Integration into the project](#integration-into-the-project)
+  - [Checking for updates](#checking-for-updates)
+  - [Downloading the update](#downloading-the-update)
+    - [Deferred update](#deferred-update)
+    - [Forced update](#forced-update)
+    - [Silent update](#silent-update)
+  - [Installing the update](#installing-the-update)
+    - [Flexible update completion](#flexible-update-completion)
+    - [Silent update completion](#silent-update-completion)
+  - [Possible errors](#possible-errors)
 
-### Общее
+### General
 
-RuStore In-app updates SDK помогает поддерживать актуальную версию вашего приложения на устройстве пользователя.
+RuStore In-app updates SDK helps keep your app up to date on the user's device.
 
-Когда пользователи поддерживают приложение в актуальном состоянии, они могут опробовать новые функции, а также воспользоваться улучшениями производительности и исправлениями ошибок.
+When users maintain their app in a current state, they can try out new features and also benefit from performance improvements and bug fixes.
 
-Вы можете использовать RuStore In-app updates SDK для отображения процесса обновления приложения, который обеспечивает фоновую загрузку и установку обновления с контролем состояния. Пользователь сможет использовать ваше приложение в момент загрузки обновления.
+You can use the RuStore In-app updates SDK to display an app update process that ensures background download and installation of the update with status control. The user will be able to use your app during the update download.
 
-### Пример пользовательского сценария
+### Example user scenario
 
 <img src="https://gitflic.ru/project/rustore/flutter-rustore-update/blob/raw?file=flow.png" alt="Update flow" height="400px">
 
-### Подготовка требуемых параметров
+### Preparing required parameters
 
-Для запуска примера, вам нужны следующие параметры:
+To run the example, you need the following parameters:
 
-1. `applicationId` - - из приложения, которое вы публиковали в консоль RuStore, находится в файле build.gradle вашего проекта
+1. `applicationId` - from the app you published in the RuStore console, is located in the build.gradle file of your project
 
 ```
   android {
@@ -47,11 +79,11 @@ RuStore In-app updates SDK помогает поддерживать актуа�
   }
 ```
 
-2. `release.keystore` - подпись, которой было подписано приложение, опубликованное в консоль RuStore.
+2. `release.keystore` - signature used to sign the app published in the RuStore console.
 
-### Настройка примера приложения
+### Setting up the sample app
 
-1. Для проверки работы примера вам надо загрузить в консоль 2 версси приложения, с разным versionCode. И в тестировании указать меньший versionCode, нежели есть в консоли.
+1. To test the example, upload two versions of the app to the console with different versionCodes. In testing, specify a smaller versionCode than what is in the console.
 
 ```
   defaultConfig {
@@ -59,17 +91,17 @@ RuStore In-app updates SDK помогает поддерживать актуа�
   }
 ```
 
-2. Замените `applicationId` в файле example/android/app/build.gradle, на applicationId apk-файла, который вы публиковали в консоль RuStore:
+2. Replace `applicationId` in the example/android/app/build.gradle file with the applicationId of the apk file you published in the RuStore console:
 
 ```
 android {
   defaultConfig {
-    applicationId = "ru.rustore.sdk.updateexample" // Зачастую в buildTypes приписывается .debug
+    applicationId = "ru.rustore.sdk.updateexample" // Often .debug is appended in buildTypes
   }
 }
 ```
 
-3. Замените подпись на подпись вашего приложения. Настройте параметры `key_alias`, `key_password`, `store_password`
+3. Replace the signature with your app's signature. Configure `key_alias`, `key_password`, `store_password` parameters
 
 ```
 android{
@@ -84,45 +116,45 @@ android{
 }
 ```
 
-### Условия корректной работы SDK
+### Conditions for correct SDK operation
 
-Для работы RuStore In-app updates SDK необходимо соблюдение следующих условий:
+For RuStore In-app updates SDK to work correctly, the following conditions must be met:
 
-- ОС Android версии 7.0 или выше.
-- На устройстве пользователя должен быть установлен RuStore.
-- Версия RuStoreApp на устройстве пользователя должна быть актуальной.
-- Приложению RuStore должна быть разрешена установка приложений.
+- Android OS version 7.0 or higher.
+- RuStore must be installed on the user's device.
+- The RuStoreApp version on the user's device must be current.
+- RuStore app must be allowed to install apps.
 
-### Пример реализации
+### Example implementation
 
-Для того, чтобы узнать как правильно интегрировать пакет для работы с push-уведомлениями, рекомендуется ознакомиться с приложением-примером
+To learn how to properly integrate the package for working with push notifications, it is recommended to familiarize yourself with the sample app
 
 [https://gitflic.ru/project/rustore/flutter-rustore-update](https://gitflic.ru/project/rustore/flutter-rustore-update)
 
-## Подключение в проект
+## Integration into the project
 
-Для подключения пакета к проекту нужно выполнить команду
+To add the package to the project, execute the command
 
 ```sh
 flutter pub add flutter_rustore_update
 ```
 
-Эта команда добавит строчку в файл pubspec.yaml
+This command adds a line to the pubspec.yaml file
 
 ```yml
 dependencies:
-    flutter_rustore_update: ^10.0.0
+    flutter_rustore_update: ^10.5.2
 ```
 
-## Проверка наличия обновлений
+## Checking for updates
 
-Прежде чем запрашивать обновление, проверьте, доступно ли обновление для вашего приложения. Для проверки наличия обновлений вызовите метод info(). При вызове данного метода проверяются следующие условия:
+Before requesting an update, check if an update is available for your app. To check for updates, call the info() method. When calling this method, the following conditions are checked:
 
-- На устройстве пользователя должен быть установлен RuStore.
-- Версия RuStoreApp на устройстве пользователя должна быть актуальной.
-- Пользователь и приложение не должны быть заблокированы в RuStore.
+- RuStore must be installed on the user's device.
+- The RuStoreApp version on the user's device must be current.
+- The user and the app must not be blocked in RuStore.
 
-В ответ на данный метод вы получите объект info, который будет содержать в себе информацию о необходимости обновления.
+In response to this method, you will receive an info object containing information about whether an update is needed.
 
 ```dart
 RustoreUpdateClient.info().then((info) {
@@ -132,28 +164,28 @@ RustoreUpdateClient.info().then((info) {
 });
 ```
 
-Объект info содержит набор параметров, необходимых для определения доступности обновления:
+The info object contains a set of parameters necessary to determine update availability:
 
-- updateAvailability - доступность обновления:
-- UPDATE_AVAILABILITY_NOT_AVAILABLE - обновление не нужно.
-- UPDATE_AVAILABILITY_AVAILABLE - обновление требуется загрузить или обновление уже загружено на устройство пользователя.
-- UPDATE_AVAILABILITY_IN_PROGRESS - обновление уже скачивается или установка уже запущена.
-- UPDATE_AVAILABILITY_UNKNOWN - статус по умолчанию.
-- installStatus - статус установки обновления, если пользователь уже устанавливает обновление в текущий момент времени:
-- INSTALL_STATUS_DOWNLOADED - скачано.
-- INSTALL_STATUS_DOWNLOADING - скачивается.
-- INSTALL_STATUS_FAILED - ошибка.
-- INSTALL_STATUS_INSTALLING - устанавливается.
-- INSTALL_STATUS_PENDING - в ожидании.
-- INSTALL_STATUS_UNKNOWN - по умолчанию.
+- updateAvailability - update availability:
+- UPDATE_AVAILABILITY_NOT_AVAILABLE - no update needed.
+- UPDATE_AVAILABILITY_AVAILABLE - update needs to be downloaded or already downloaded to the user's device.
+- UPDATE_AVAILABILITY_IN_PROGRESS - update is being downloaded or installation has started.
+- UPDATE_AVAILABILITY_UNKNOWN - default status.
+- installStatus - installation status if the user is currently installing an update:
+- INSTALL_STATUS_DOWNLOADED - downloaded.
+- INSTALL_STATUS_DOWNLOADING - downloading.
+- INSTALL_STATUS_FAILED - error.
+- INSTALL_STATUS_INSTALLING - installing.
+- INSTALL_STATUS_PENDING - pending.
+- INSTALL_STATUS_UNKNOWN - default.
 
-Запуск скачивания обновления возможен только в том случае, если поле updateAvailability содержит значение UPDATE_AILABILITY_AVAILABLE.
+Downloading an update is only possible if the updateAvailability field contains the value UPDATE_AVAILABILITY_AVAILABLE.
 
-Метод может вернуть ошибку, детально со списком ошибок можно ознакомиться в разделе ***Возможные ошибки**.
+The method may return an error. For more details, see the section ***Possible errors**.
 
-## Скачивание обновления
+## Downloading the update
 
-После подтверждения доступности обновления вы можете запросить у пользователя скачивание обновления, но перед этим необходимо запустить слушатель статуса скачивания обновления, используя метод listener()
+After confirming update availability, you can request the user to download the update, but first you need to start listening to the update download status using the listener() method
 
 ```dart
 RustoreUpdateClient.listener((value) {
@@ -163,29 +195,29 @@ RustoreUpdateClient.listener((value) {
   print("listener installErrorCode ${value.installErrorCode}");
  
   if (value.installStatus == INSTALL_STATUS_DOWNLOADED) {
-    // тут можно вызывать метод complete()
+    // here you can call the complete() method
   }
 });
 ```
 
-Объект state описывает текущий статус скачивания обновления. Объект содержит:
+The state object describes the current status of the update download. The object contains:
 
-- installStatus - статус установки обновления, если пользователь уже устанавливает обновление в текущий момент времени:
-- INSTALL_STATUS_DOWNLOADED - скачано.
-- INSTALL_STATUS_DOWNLOADING - скачивается.
-- INSTALL_STATUS_FAILED - ошибка.
-- INSTALL_STATUS_INSTALLING - устанавливается.
-- INSTALL_STATUS_PENDING - в ожидании.
-- INSTALL_STATUS_UNKNOWN - по умолчанию.
-- bytesDownloaded - количество загруженных байт.
-- totalBytesToDownload - общее количество байт, которое необходимо скачать.
-- installErrorCode - код ошибки во время скачивания. Детальнее с возможными ошибками можно ознакомиться в разделе **Возможные ошибки**.
+- installStatus - installation status if the user is currently installing an update:
+- INSTALL_STATUS_DOWNLOADED - downloaded.
+- INSTALL_STATUS_DOWNLOADING - downloading.
+- INSTALL_STATUS_FAILED - error.
+- INSTALL_STATUS_INSTALLING - installing.
+- INSTALL_STATUS_PENDING - pending.
+- INSTALL_STATUS_UNKNOWN - default.
+- bytesDownloaded - number of downloaded bytes.
+- totalBytesToDownload - total number of bytes to download.
+- installErrorCode - error code during download. More details about possible errors can be found in the **Possible errors** section.
 
-### Отложенное обновление
+### Deferred update
 
-Скачивание с UI от RuStore
+Download with UI from RuStore
 
-Для запуска скачивания обновления приложения вызовите метод download().
+To initiate the app update download, call the download() method.
 
 ```dart
 RustoreUpdateClient.download().then((value) {
@@ -195,17 +227,17 @@ RustoreUpdateClient.download().then((value) {
 });
 ```
 
-Если пользователь подтвердил скачивание обновления, то value.code = ACTIVITY_RESULT_OK, если отказался, то value.code = ACTIVITY_RESULT_CANCELED.
+If the user confirms the update download, then value.code = ACTIVITY_RESULT_OK, if they decline, then value.code = ACTIVITY_RESULT_CANCELED.
 
-После вызова метода вы можете следить за статусом скачивания обновления в слушателе. Если в слушателе вы получили статус INSTALL_STATUS_DOWNLOADED, то вы можете вызвать метод установки обновления complete(). Рекомендуем уведомить пользователя о готовности установки обновления.
+After calling the method, you can monitor the update download status in the listener. If in the listener you receive the status INSTALL_STATUS_DOWNLOADED, then you can call the update installation method complete(). It is recommended to notify the user about the readiness of the update installation.
 
-Метод может вернуть ошибку. Детальнее со списком ошибок можно ознакомиться в разделе **Возможные ошибки**.
+The method may return an error. More details about possible errors can be found in the **Possible errors** section.
 
-### Принудительное обновление
+### Forced update
 
-Скачивание с UI от RuStore
+Download with UI from RuStore
 
-Для запуска скачивания принудительного обновления приложения вызовите метод `immediate()`.
+To initiate forced update download, call the `immediate()` method.
 
 ```js
 RustoreUpdateClient.immediate().then((value) {
@@ -217,21 +249,21 @@ RustoreUpdateClient.immediate().then((value) {
 
 `resultCode (Int)`:
 
-- `ACTIVITY_RESULT_OK (-1)` — обновление выполнено, код может не быть получен, т. к. приложение в момент обновления завершается.
-- `ACTIVITY_RESULT_CANCELED (0)` — флоу прервано пользователем, или произошла ошибка. Предполагается, что при получении этого кода следует завершить работу приложения.
-- `ACTIVITY_RESULT_NOT_FOUND (2)` — RuStore не установлен, либо установлена версия, которая не поддерживает принудительное обновление (`RuStore versionCode` < `191`).
+- `ACTIVITY_RESULT_OK (-1)` — update completed, the code might not be received as the app may terminate during the update.
+- `ACTIVITY_RESULT_CANCELED (0)` — flow interrupted by the user or an error occurred. It is assumed that upon receiving this code, the app should terminate.
+- `ACTIVITY_RESULT_NOT_FOUND (2)` — RuStore is not installed, or an incompatible version is installed (`RuStore versionCode` < `191`).
 
-`throwable` — ошибка старта сценария обновления.
+`throwable` — error starting the update flow.
 
-При успешном обновлении дальнейших действий не требуется.
+No further actions are required after successful update.
 
-### Тихое обновление
+### Silent update
 
-Скачивание без UI от RuStore
+Download without UI from RuStore
 
-Для данного типа обновления рекомендуется реализовать свой интерфейс.
+For this type of update, it is recommended to implement your own interface.
 
-Для запуска скачивания тихого обновления приложения вызовите метод `silent()`.
+To initiate silent update download, call the `silent()` method.
 
 ```js
 RustoreUpdateClient.silent().then((value) {
@@ -241,21 +273,21 @@ RustoreUpdateClient.silent().then((value) {
 });
 ```
 
-При вызове `then` с `code = ACTIVITY_RESULT_OK` будет зарегистрирована задача на скачивание обновления.
+Upon calling `then` with `code = ACTIVITY_RESULT_OK`, a task for downloading the update will be registered.
 
-В данном сценарии может быть вызван только `then` с `ACTIVITY_RESULT_OK`, либо `catchError`.
+In this scenario, only `then` with `ACTIVITY_RESULT_OK` or `catchError` can be called.
 
-После вызова метода вы можете следить за статусом скачивания обновления в слушателе.
+After calling the method, you can monitor the update download status in the listener.
 
-После получения статуса `INSTALL_STATUS_DOWNLOADED` вы можете вызвать метод установки обновления. Рекомендуется уведомить пользователя о готовности обновления к установке.
+Once the status `INSTALL_STATUS_DOWNLOADED` is received, you can call the update installation method. It is recommended to notify the user about the readiness of the update for installation.
 
-## Установка обновления
+## Installing the update
 
-### Гибкое завершение обновления
+### Flexible update completion
 
-Обновление с UI от RuStore:
+Update with UI from RuStore:
 
-После завершения скачивания apk-файла обновления вы можете запустить установку обновления. Для запуска установки обновления вызовите метод completeUpdateFlexible().
+After downloading the APK file of the update, you can start installing the update. To initiate the update installation, call the completeUpdateFlexible() method.
 
 ```dart
 RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
@@ -263,17 +295,16 @@ RustoreUpdateClient.completeUpdateFlexible().catchError((err) {
 });
 ```
 
-1.Пользователю будет показан UI-диалог завершения обновления.
+1. A UI dialog for completing the update will be shown to the user.
+2. In case of successful update, the app will restart.
 
-2.В случае успешного обновления приложение будет перезапущено.
+The update is performed via the native Android tool. After a successful update, the app will restart.
 
-Обновление происходит через нативный инструмент android. В случае успешного обновления приложение перезапустится.
+### Silent update completion
 
-### Тихое завершение обновления
+Update without UI from RuStore:
 
-Обновление без UI от RuStore:
-
-После завершения скачивания apk-файла обновления вы можете запустить установку обновления. Для запуска установки обновления вызовите метод completeUpdateSilent().
+After downloading the APK file of the update, you can start installing the update. To initiate the update installation, call the completeUpdateSilent() method.
 
 ```dart
 RustoreUpdateClient.completeUpdateSilent().catchError((err) {
@@ -281,28 +312,30 @@ RustoreUpdateClient.completeUpdateSilent().catchError((err) {
 });
 ```
 
-1.UI-диалог завершения обновления не будет показан.
+1. The UI dialog for completing the update will not be shown.
+2. In case of successful update, the app will close.
 
-2.В случае успешного обновления приложение будет закрыто.
+The update is performed via the native Android tool. After a successful update, the app will close.
 
-Обновление происходит через нативный инструмент android. В случае успешного обновления приложение будет закрыто.
+Errors may occur during the update phase. More details about them can be found in the **Possible errors** section.
 
-На этапе обновления могут возникнуть ошибки. Детальнее с ними можно ознакомиться в разделе **Возможные ошибки**.
+## Possible errors
 
-## Возможные ошибки
+If you get onFailure in response, do not display the error to the user yourself. Displaying the error may negatively affect the user experience.
 
-Если вы получили в ответ onFailure, то не рекомендуем самостоятельно отображать ошибку пользователю. Отображение ошибки может негативно повлиять на пользовательский опыт.
+List of possible errors:
 
-Список возможных ошибок:
+- UPDATE_ERROR_DOWNLOAD - Error during download.
+- UPDATE_ERROR_BLOCKED - Installation blocked by system.
+- UPDATE_ERROR_INVALID_APK - Invalid APK update.
+- UPDATE_ERROR_CONFLICT - Conflict with the current app version.
+- UPDATE_ERROR_STORAGE - Insufficient storage on the device.
+- UPDATE_ERROR_INCOMPATIBLE - Incompatible with the device.
+- UPDATE_ERROR_APP_NOT_OWNED - App not purchased.
+- UPDATE_ERROR_INTERNAL_ERROR - Internal error.
+- UPDATE_ERROR_ABORTED - User declined the update installation.
+- UPDATE_ERROR_APK_NOT_FOUND - APK for installation not found.
+- UPDATE_ERROR_EXTERNAL_SOURCE_DENIED - Update launch denied. For example, in the first method, the response indicated that the update is unavailable, but the user calls the second method.
 
-- UPDATE_ERROR_DOWNLOAD - Ошибка при скачивании.
-- UPDATE_ERROR_BLOCKED - Установка заблокированна системой.
-- UPDATE_ERROR_INVALID_APK - Некорректный APK обновления.
-- UPDATE_ERROR_CONFLICT - Конфликт с текущей версией приложения.
-- UPDATE_ERROR_STORAGE - Недостаточно памяти на устройстве.
-- UPDATE_ERROR_INCOMPATIBLE - Несовместимо с устройством.
-- UPDATE_ERROR_APP_NOT_OWNED - Приложение не куплено.
-- UPDATE_ERROR_INTERNAL_ERROR - Внутренняя ошибка.
-- UPDATE_ERROR_ABORTED - Пользователь отказался от установки обновления.
-- UPDATE_ERROR_APK_NOT_FOUND - apk для запуска установки не найден.
-- UPDATE_ERROR_EXTERNAL_SOURCE_DENIED - Запуск обновления запрещён. Например, в первом методе вернулся ответ о том, что обновление недоступно, но пользователь вызывает второй метод.
+[ru]: README.ru.md
+[en]: README.md
